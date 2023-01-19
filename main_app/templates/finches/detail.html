@@ -1,13 +1,58 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+{% block content %}
 
 <h1>Finch List</h1>
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ finch.name }}</span>
-    <p>Size: {{ finch.size }}cm</p>
-    <p>Color: {{ finch.color }}</p>
-    <p>Behavior: {{ finch.behavior}}</p>
+
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ finch.name }}</span>
+        <p>Size: {{ finch.size }}cm</p>
+        <p>Color: {{ finch.color }}</p>
+        <p>Behavior: {{ finch.behavior}}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'finch_update' finch.id %}">Edit</a>
+        <a href="{% url 'finch_delete' finch.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+  <div class="col s6">
+    <form action="{% url 'add_napping' finch.id %}" method="POST">
+      {% csrf_token %} {{ napping_form.as_p }}
+      <input type="submit" class="btn" value="Add Nap" />
+    </form>
+    <!-- new code above -->
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Nap Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for napping in finch.napping_set.all %}
+        <tr>
+          <td>{{napping.date}}</td>
+          <td>{{napping.get_nap_display}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
+
+<script>
+  const dateEl = document.getElementById("id_date")
+  M.Datepicker.init(dateEl, {
+    format: "yyyy-mm-dd",
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true,
+  })
+  const selectEl = document.getElementById("id_nap")
+  M.FormSelect.init(selectEl)
+</script>
 
 {% endblock %}
