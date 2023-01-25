@@ -22,8 +22,11 @@
           <ul class="right">
             <li><a href="/about">About</a></li>
             <!-- new markup below -->
-            <li><a href="/finches/create">Add a Finch</a></li>
-            <li><a href="/finches">View finches</a></li>
+            <li><a href="{% url 'finch_create' %}">Add a Finch</a></li>
+            <li><a href="{% url 'index' %}">View finches</a></li>
+            <li><a href="{% url 'seeds_create' %}">Add Seed</a></li>
+            <li><a href="{% url 'seeds_index' %}">View Seeds</a></li>
+            <li><a href="{% url 'index' %}">View finches</a></li>
           </ul>
         </div>
       </nav>
