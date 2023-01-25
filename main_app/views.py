@@ -66,7 +66,7 @@ class SeedDelete(DeleteView):
 
 class FinchCreate(CreateView):
     model = Finch
-    fields = '__all__'
+    fields = ['name', 'size', 'color', 'behavior']
 
 
 class FinchUpdate(UpdateView):
